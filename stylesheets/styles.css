@@ -1,0 +1,394 @@
+body {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+
+  padding:0px;
+  margin: 0px;
+  font:18px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color:#333;
+  background-color: #efefef;
+  font-weight:300;
+}
+
+/*渲染优化*/
+canvas, img {
+ 	image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color:#222;
+  margin:0 0 15px;
+}
+
+p, ul, ol, table, dl {
+  margin:0 0 10px;
+}
+
+h1, h2, h3 {
+  line-height:1.1;
+}
+
+h1 {
+  font-size:28px;
+}
+
+h2 {
+  color:#393939;
+}
+
+h3, h4, h5, h6 {
+  color:#494949;
+}
+
+a {
+  color:#252525;
+  font-weight:400;
+  text-decoration:none;
+}
+
+a small {
+  font-size:14px;
+  color:#666;
+  margin-top:-0.6em;
+  display:block;
+}
+
+#tags {
+  clear: both;
+  margin-top: 70px;
+}
+
+#tags h3{
+  font-size: 18px;
+  text-align: left;
+}
+
+#tags a {
+  color: #555;
+  margin-right: 10px;
+  display: inline-block;
+}
+
+#tags a:hover {
+  color: #000;
+}
+
+#toolBox {
+  border: 1px #999 solid;
+  width: 650px;
+  padding: 10px;
+  margin-bottom: 20px;
+  display: block;
+  -moz-border-radius: 3px;      /* Gecko browsers */
+  -webkit-border-radius: 3px;   /* Webkit browsers */
+  border-radius:3px;
+}
+
+#pagination {
+  color: #555;
+  font-size: 14px;
+}
+#pager {
+  border: 1px #555 solid;
+  width: 66px;
+  height: 34px;
+  line-height: 34px;
+  display: inline-block;
+  margin:0 30px;
+  text-align: center;
+  -moz-border-radius: 3px;      /* Gecko browsers */
+  -webkit-border-radius: 3px;   /* Webkit browsers */
+  border-radius:3px;
+}
+
+#pager:hover {
+  color: #000;
+  border: 1px #999 solid;
+}
+
+.wrapper {
+  width:960px;
+  height: 100vh;
+  margin:0 auto;
+}
+
+#round {
+display: inline-block;
+overflow: hidden;
+line-height: 1;
+vertical-align: middle;
+border: 3px solid #dedede;
+-moz-border-radius: 10px;      /* Gecko browsers */
+-webkit-border-radius: 10px;   /* Webkit browsers */
+border-radius:10px;           /* W3C syntax */
+width:100px;
+ height:100px;
+ margin:20px auto;
+}
+
+blockquote {
+  border-left:1px solid #e5e5e5;
+  margin:0;
+  padding:0 0 0 20px;
+  font-style:italic;
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+}
+
+th, td {
+  text-align:left;
+  padding:5px 10px;
+  border-bottom:1px solid #e5e5e5;
+}
+
+dt {
+  color:#444;
+  font-weight:700;
+}
+
+th {
+  color:#444;
+}
+
+img {
+  max-width:100%;
+}
+
+header {
+  width:220px;
+  height: 94vh;
+  padding: 1.5vh 15px;
+  margin-top: 1.5vh;
+  float:left;
+  position:fixed;
+  text-align:center;
+}
+
+#fixedRadiusCornerBg {
+  width:960px;
+  height: 97vh;
+  margin-top: 1.5vh;
+
+  float:left;
+  position:fixed;
+  z-index: -999;
+}
+
+.radiusCornerBg {
+  background-color: #ffffff;
+  border: 0px;
+  -moz-border-radius: 6px;      /* Gecko browsers */
+  -webkit-border-radius: 6px;   /* Webkit browsers */
+  border-radius:6px;
+}
+
+#fixedRadiusCornerBg_left {
+  width:240px;
+  height: 100%;
+  float:left;
+}
+
+#fixedRadiusCornerBg_right {
+  width:710px;
+  height: 100%;
+  float:right;
+}
+
+#fadeoutContainer {
+  width:960px;
+  height: 100vh;
+  position:fixed;
+  z-index: 999;
+}
+
+#topFadeoutCorner {
+  background-color: #ff0000;
+  width:710px;
+  height: 20px;
+  border: 0px;
+  float: right;
+  -moz-border-radius: 6px 6px 0px 0px;      /* Gecko browsers */
+  -webkit-border-radius: 6px 6px 0px 0px;   /* Webkit browsers */
+  border-radius:6px 6px 0px 0px;
+}
+
+.time {
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+header ul {
+  list-style:none;
+  height:40px;
+
+  padding:0;
+
+  background: #eee;
+  background: -moz-linear-gradient(top, #f8f8f8 0%, #dddddd 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8f8f8), color-stop(100%,#dddddd));
+  background: -webkit-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
+  background: -o-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
+  background: -ms-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
+  background: linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
+
+  border-radius:5px;
+  border:1px solid #d2d2d2;
+  box-shadow:inset #fff 0 1px 0, inset rgba(0,0,0,0.03) 0 -1px 0;
+  width:270px;
+}
+
+header li {
+  width:89px;
+  float:left;
+  border-right:1px solid #d2d2d2;
+  height:40px;
+}
+
+header ul a {
+  line-height:1;
+  font-size:11px;
+  color:#999;
+  display:block;
+  text-align:center;
+  padding-top:6px;
+  height:40px;
+}
+
+strong {
+  color:#222;
+  font-weight:700;
+}
+
+header ul li + li {
+  width:88px;
+  border-left:1px solid #fff;
+}
+
+header ul li + li + li {
+  border-right:none;
+  width:89px;
+}
+
+header ul a strong {
+  font-size:14px;
+  display:block;
+  color:#222;
+}
+
+#content {
+  width:690px;
+  height: 93vh;
+  overflow: scroll;
+  -webkit-clip-path: polygon(0px 0vh, 100% 0vh, 100% 97vh, 0px 97vh);/*Safari, Chrome支持*/
+  clip-path: url(#clipping4);
+  margin-left: 270px;
+  margin-top: 4vh;
+  position:fixed;
+
+  /*padding: 20px 15px 50px 15px;*/
+}
+
+Canvas {
+  width:97%;
+  height: 360px;
+  margin-bottom: 4%;
+}
+
+small {
+  font-size:11px;
+}
+
+hr {
+  border:0;
+  background:#e5e5e5;
+  height:1px;
+  margin:0 0 20px;
+}
+
+footer {
+  width:250px;
+  float:left;
+  position:fixed;
+  padding-left: 15px;
+  bottom:30px;
+}
+
+@media print, screen and (max-width: 960px) {
+
+  div.wrapper {
+    width:auto;
+    margin:0;
+  }
+
+  header, section, footer {
+    float:none;
+    position:static;
+    width:auto;
+  }
+
+  header {
+    padding-right:320px;
+  }
+
+  section {
+    border:1px solid #e5e5e5;
+    border-width:1px 0;
+    padding:20px 0;
+    margin:0 0 20px;
+  }
+
+  header a small {
+    display:inline;
+  }
+
+  header ul {
+    position:absolute;
+    right:50px;
+    top:52px;
+  }
+}
+
+@media print, screen and (max-width: 720px) {
+  body {
+    word-wrap:break-word;
+  }
+
+  header {
+    padding:0;
+  }
+
+  header ul, header p.view {
+    position:static;
+  }
+
+}
+
+@media print, screen and (max-width: 480px) {
+  body {
+    padding:15px;
+  }
+
+  header ul {
+    display:none;
+  }
+}
+
+@media print {
+  body {
+    padding:0.4in;
+    font-size:12pt;
+    color:#444;
+  }
+}

@@ -1,0 +1,238 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="author" content="李金磊" >
+
+    <title>绘制类似鸟巢结构的图形</title>
+
+    
+
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <link rel="stylesheet" href="/bower_components/normalize.css/normalize.css" >
+
+    <script src="/javascripts/utils.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div class="wrapper">
+
+      <!-- 背景圆角 -->
+      <div id="fixedRadiusCornerBg">
+        <div id="fixedRadiusCornerBg_left" class="radiusCornerBg">
+        </div>
+        <div id="fixedRadiusCornerBg_right" class="radiusCornerBg">
+        </div>
+      </div>
+
+      <header>
+        <a href="/">
+        <img id="round" style="" src="/images/avatar.png" />
+        <p style="color:#252525;font-size:22px; font-style:bold;">李金磊的 Playground</p>
+        <p style="color:#555555;text-align:left">「Less talk, more coding, professional made wheels.」</p>
+      </a>
+        <p class="view">
+
+
+          <div id="tags">
+            <h3>Tags：</h3>
+            
+    <a href="/tag/Canvas/index.html"> Canvas</a>
+
+    <a href="/tag/Javascript/index.html"> Javascript</a>
+
+    <a href="/tag/动效/index.html"> 动效</a>
+
+    <a href="/tag/SVG/index.html"> SVG</a>
+
+    <a href="/tag/Bezier/index.html"> Bezier</a>
+
+    <a href="/tag/图形图像/index.html"> 图形图像</a>
+
+    <a href="/tag/WebGL/index.html"> WebGL</a>
+
+    <a href="/tag/流体模拟/index.html"> 流体模拟</a>
+
+    <a href="/tag/运动学/index.html"> 运动学</a>
+
+          </div>
+
+      </header>
+
+      <section id="content">
+        <div>
+  <h2>绘制类似鸟巢结构的图形</h2>
+  <p class="time">01 Jun 2014</p>
+
+
+  <p><b>Demo:</b></p>
+  <canvas id="canvas">
+        当前的浏览器不支持canvas, canvas是HTML5里才有的标签，主要用于图形绘制操作
+  </canvas>
+
+  <p>实现代码</p>
+  <p>1,利用四条贝塞尔曲线定义一个椭圆路径</p>
+  <pre id="pre" class="prettyprint">
+function createEllipsePath(w, h) {
+  var radiusX = w/2.0;
+  var radiusY = h/2.0;
+  var path = new Path2D();
+  path.moveTo(0, -radiusY);
+  path.bezierCurveTo(-radiusX/2, -radiusY, -radiusX, -radiusY/2, -radiusX, 0);
+  path.bezierCurveTo(-radiusX, radiusY/2, -radiusX/2, radiusY, 0, radiusY);
+  path.bezierCurveTo(radiusX/2, radiusY, radiusX, radiusY/2, radiusX, 0);
+  path.bezierCurveTo(radiusX, -radiusY/2, radiusX/2, -radiusY, 0, -radiusY);
+  return path;
+}
+  </pre>
+
+  <p>2,定义ellipseCount变量用来表示要绘制的椭圆数量，enterFrame() 方法里通过梯增梯减操作计算每一帧椭圆数量</p>
+  <pre class="prettyprint">
+var ellipseCount = 0;
+//反向绘制
+var ifNeedsDrawBack = false;
+
+function enterFrame() {
+  if (ifNeedsDrawBack) {
+    ellipseCount--;
+    if (ellipseCount == 0) {
+      ifNeedsDrawBack = false;
+    }
+  }
+  else {
+    ellipseCount++;
+    if (ellipseCount == 35 ) {
+      ifNeedsDrawBack = true;
+    }
+  }
+  updateDisplay()
+}
+  </pre>
+
+  <p>3,绘制，每绘制一个椭圆，将坐标旋转6度</p>
+  <pre class="prettyprint">
+function updateDisplay() {
+  ctx.clearRect(0,0, canvasWidth, canvasHeight);
+  drawCanvasBackground();
+  ctx.save();
+  ctx.translate(centerX, centerY);
+  ctx.strokeStyle = "#cccccc";
+  for (var i = 0; i < ellipseCount; i ++) {
+    var angle = 6 *((Math.PI * 2) / 360);
+    ctx.rotate(angle);
+    ctx.stroke(ellipsePath);
+  }
+  ctx.restore();
+}
+  </pre>
+
+  <script src="/javascripts/draw.js"></script>
+
+  <script type="text/javascript">
+  ctx.canvas.height  = 280;
+  canvasHeight = canvas.offsetHeight;
+  centerY = canvasHeight/2.0;
+
+  function createEllipsePath(w, h) {
+    var radiusX = w/2.0;
+    var radiusY = h/2.0;
+    ctx.beginPath();
+    ctx.moveTo(0, -radiusY);
+    ctx.bezierCurveTo(-radiusX/2, -radiusY, -radiusX, -radiusY/2, -radiusX, 0);
+    ctx.bezierCurveTo(-radiusX, radiusY/2, -radiusX/2, radiusY, 0, radiusY);
+    ctx.bezierCurveTo(radiusX/2, radiusY, radiusX, radiusY/2, radiusX, 0);
+    ctx.bezierCurveTo(radiusX, -radiusY/2, radiusX/2, -radiusY, 0, -radiusY);
+  }
+
+  var ellipsePath = createEllipsePath(100, 200);
+  var ellipseCount = 0;
+  //反向绘制
+  var ifNeedsDrawBack = false;
+  function enterFrame() {
+    if (ifNeedsDrawBack) {
+      ellipseCount--;
+      if (ellipseCount == 0) {
+        ifNeedsDrawBack = false;
+      }
+    }
+    else {
+      ellipseCount++;
+      if (ellipseCount == 35 ) {
+        ifNeedsDrawBack = true;
+      }
+    }
+    updateDisplay()
+  }
+
+  function updateDisplay() {
+    ctx.clearRect(0,0, canvasWidth, canvasHeight);
+    drawCanvasBackground();
+    ctx.save();
+    ctx.translate(centerX, centerY);
+    ctx.strokeStyle = "#cccccc";
+    for (var i=0; i<ellipseCount; i++) {
+      var angle = 6 *((Math.PI * 2) / 360);
+      ctx.rotate(angle);
+      createEllipsePath(100, 200);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  setCanvasScaleIfNeeds();
+  setInterval("enterFrame()", 30);
+
+  </script>
+
+</div>
+
+      </section>
+
+      <!-- 文字淡出 -->
+      <!-- <div id="fadeoutContainer">
+        <div id="topFadeoutCorner">
+        </div>
+
+      </div> -->
+      <svg width="0" height="0">
+        <defs>
+          <clipPath id="clip3">
+             <rect width="568" height="426" rx="85.2" ry="85.2"></rect>
+          </clipPath>
+          <clipPath id="clip4">
+              <ellipse cx="284" cy="213" rx="284" ry="213"></ellipse>
+          </clipPath>
+          <filter id="filter2">
+            <feGaussianBlur stdDeviation="10"></feGaussianBlur>
+          </filter>
+          <filter id="filter">
+            <feGaussianBlur stdDeviation="0.03"></feGaussianBlur>
+          </filter>
+          <filter id="filter2">
+            <feGaussianBlur stdDeviation="5"></feGaussianBlur>
+          </filter>
+          <linearGradient id="gradient" x1="0" y1="00%" x2="0" y2="100%">
+            <stop stop-color="black" offset="0"></stop>
+            <stop stop-color="white" offset="1"></stop>
+          </linearGradient>
+          <clipPath id="clipping4">
+            <rect width="5680" height="2" rx="85.2" ry="85.2"></rect>
+          </clipPath>
+        </defs>
+      </svg>
+      <footer>
+        <p><small>contact me：grenlight@icloud.com</small></p>
+      </footer>
+    </div>
+    <script src="/javascripts/scale.fix.js"></script>
+<script src="/javascripts/prettify/run_prettify.js"></script>
+<link rel="stylesheet" href="/stylesheets/code-prettify-sunburst.css">
+
+</script>
+  </body>
+</html>

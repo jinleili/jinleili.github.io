@@ -1,0 +1,10 @@
+{
+  "name": "李金磊's playground'",
+  "version": "0.0.1",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0",
+    "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#~1.0.3",
+    "paper-button": "PolymerElements/paper-button#~1.0.3",
+    "paper-slider": "PolymerElements/paper-slider#~1.0.3"
+  }
+}

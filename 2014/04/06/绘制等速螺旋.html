@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="author" content="李金磊" >
+
+    <title>绘制等速螺旋</title>
+
+    
+
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <link rel="stylesheet" href="/bower_components/normalize.css/normalize.css" >
+
+    <script src="/javascripts/utils.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div class="wrapper">
+
+      <!-- 背景圆角 -->
+      <div id="fixedRadiusCornerBg">
+        <div id="fixedRadiusCornerBg_left" class="radiusCornerBg">
+        </div>
+        <div id="fixedRadiusCornerBg_right" class="radiusCornerBg">
+        </div>
+      </div>
+
+      <header>
+        <a href="/">
+        <img id="round" style="" src="/images/avatar.png" />
+        <p style="color:#252525;font-size:22px; font-style:bold;">李金磊的 Playground</p>
+        <p style="color:#555555;text-align:left">「Less talk, more coding, professional made wheels.」</p>
+      </a>
+        <p class="view">
+
+
+          <div id="tags">
+            <h3>Tags：</h3>
+            
+    <a href="/tag/Canvas/index.html"> Canvas</a>
+
+    <a href="/tag/Javascript/index.html"> Javascript</a>
+
+    <a href="/tag/动效/index.html"> 动效</a>
+
+    <a href="/tag/SVG/index.html"> SVG</a>
+
+    <a href="/tag/Bezier/index.html"> Bezier</a>
+
+    <a href="/tag/图形图像/index.html"> 图形图像</a>
+
+    <a href="/tag/WebGL/index.html"> WebGL</a>
+
+    <a href="/tag/流体模拟/index.html"> 流体模拟</a>
+
+    <a href="/tag/运动学/index.html"> 运动学</a>
+
+          </div>
+
+      </header>
+
+      <section id="content">
+        
+
+<div>
+  <h2>使用 canvas 绘制等速螺旋</h2>
+  <p class="time">06 Apr 2014</p>
+</div>
+
+<canvas id="canvas">
+			当前的浏览器不支持canvas, canvas是HTML5里才有的标签，主要用于图形绘制操作
+</canvas>
+
+<p>实现代码</p>
+<pre id="pre" class="prettyprint">
+//通过画120条直线组成一个圆形
+var cycle = 120;
+//当前帧
+var currentFrame = 0;
+//步幅
+var stride = 2*Math.PI/120;
+//是否为反向绘制
+var isDrawBack = 0;
+//设置 canvas 的高度
+ctx.canvas.height  = 350;
+canvasHeight = canvas.offsetHeight;
+centerY = canvasHeight/2.0;
+//绘制
+function drawSpiral(){
+  //清理画布
+  ctx.clearRect(0,0, canvasWidth, canvasHeight);
+  ctx.strokeStyle = "rgb(255,0,0)";
+  ctx.lineWidth = 1.0;
+  //绘制圆角背景
+  drawCornerRect( "#252525", 6, 0, 0, canvasWidth, canvasHeight);
+  //绘制螺旋
+  var r  = 2;
+  var theta = 0;
+  var path = new Path2D();
+  path.moveTo(centerX, centerY);
+  for (var i=0; i<=currentFrame; i++) {
+    r += 0.2;
+    theta += stride;
+    var lastX = r * Math.cos(theta) + centerX;
+    var lastY = r * Math.sin(theta) + centerY;
+    path.lineTo(lastX, lastY);
+  }
+}
+
+function enterFrame() {
+  drawSpiral();
+  currentFrame += ((isDrawBack == 0) ? 1 : -1);
+  if (currentFrame == cycle*7) {
+    isDrawBack = 1;
+  }
+	if (currentFrame == 0) {
+		isDrawBack = 0;
+  }
+}
+
+setInterval("enterFrame()", 10);
+</pre>
+
+<script src="/javascripts/draw.js"></script>
+
+<script type="text/javascript">
+//通过画120条直线组成一个圆形
+var cycle = 120;
+//当前帧
+var currentFrame = 0;
+//步幅
+var stride = 2*Math.PI/120;
+//是否为反向绘制
+var isDrawBack = 0;
+//设置 canvas 的高度
+ctx.canvas.height  = 350;
+canvasHeight = canvas.offsetHeight;
+centerY = canvasHeight/2.0;
+//绘制
+function drawSpiral(){
+	//清理画布
+	ctx.clearRect(0,0, canvasWidth, canvasHeight);
+	ctx.strokeStyle = "rgb(255,0,0)";
+	ctx.lineWidth = 1.0;
+	//绘制圆角背景
+  drawCanvasBackground();
+  //绘制螺旋
+	var r  = 2;
+	var theta = 0;
+  ctx.beginPath();
+	ctx.moveTo(centerX, centerY);
+	for (var i=0; i<=currentFrame; i++) {
+      r += 0.2;
+      theta += stride;
+      var lastX = r * Math.cos(theta) + centerX;
+      var lastY = r * Math.sin(theta) + centerY;
+      ctx.lineTo(lastX, lastY);
+  }
+	ctx.stroke();
+}
+
+function enterFrame() {
+	drawSpiral();
+	currentFrame += ((isDrawBack == 0) ? 1 : -1);
+	if (currentFrame == cycle*7) {
+		isDrawBack = 1;
+	}
+	if (currentFrame == 0) {
+		isDrawBack = 0;
+	}
+}
+
+setCanvasScaleIfNeeds();
+setInterval("enterFrame()", 10);
+</script>
+</body>
+</html>
+
+      </section>
+
+      <!-- 文字淡出 -->
+      <!-- <div id="fadeoutContainer">
+        <div id="topFadeoutCorner">
+        </div>
+
+      </div> -->
+      <svg width="0" height="0">
+        <defs>
+          <clipPath id="clip3">
+             <rect width="568" height="426" rx="85.2" ry="85.2"></rect>
+          </clipPath>
+          <clipPath id="clip4">
+              <ellipse cx="284" cy="213" rx="284" ry="213"></ellipse>
+          </clipPath>
+          <filter id="filter2">
+            <feGaussianBlur stdDeviation="10"></feGaussianBlur>
+          </filter>
+          <filter id="filter">
+            <feGaussianBlur stdDeviation="0.03"></feGaussianBlur>
+          </filter>
+          <filter id="filter2">
+            <feGaussianBlur stdDeviation="5"></feGaussianBlur>
+          </filter>
+          <linearGradient id="gradient" x1="0" y1="00%" x2="0" y2="100%">
+            <stop stop-color="black" offset="0"></stop>
+            <stop stop-color="white" offset="1"></stop>
+          </linearGradient>
+          <clipPath id="clipping4">
+            <rect width="5680" height="2" rx="85.2" ry="85.2"></rect>
+          </clipPath>
+        </defs>
+      </svg>
+      <footer>
+        <p><small>contact me：grenlight@icloud.com</small></p>
+      </footer>
+    </div>
+    <script src="/javascripts/scale.fix.js"></script>
+<script src="/javascripts/prettify/run_prettify.js"></script>
+<link rel="stylesheet" href="/stylesheets/code-prettify-sunburst.css">
+
+</script>
+  </body>
+</html>

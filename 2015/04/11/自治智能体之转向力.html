@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="author" content="李金磊" >
+
+    <title>自治智能体之转向力</title>
+
+    
+
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <link rel="stylesheet" href="/bower_components/normalize.css/normalize.css" >
+
+    <script src="/javascripts/utils.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div class="wrapper">
+
+      <!-- 背景圆角 -->
+      <div id="fixedRadiusCornerBg">
+        <div id="fixedRadiusCornerBg_left" class="radiusCornerBg">
+        </div>
+        <div id="fixedRadiusCornerBg_right" class="radiusCornerBg">
+        </div>
+      </div>
+
+      <header>
+        <a href="/">
+        <img id="round" style="" src="/images/avatar.png" />
+        <p style="color:#252525;font-size:22px; font-style:bold;">李金磊的 Playground</p>
+        <p style="color:#555555;text-align:left">「Less talk, more coding, professional made wheels.」</p>
+      </a>
+        <p class="view">
+
+
+          <div id="tags">
+            <h3>Tags：</h3>
+            
+    <a href="/tag/Canvas/index.html"> Canvas</a>
+
+    <a href="/tag/Javascript/index.html"> Javascript</a>
+
+    <a href="/tag/动效/index.html"> 动效</a>
+
+    <a href="/tag/SVG/index.html"> SVG</a>
+
+    <a href="/tag/Bezier/index.html"> Bezier</a>
+
+    <a href="/tag/图形图像/index.html"> 图形图像</a>
+
+    <a href="/tag/WebGL/index.html"> WebGL</a>
+
+    <a href="/tag/流体模拟/index.html"> 流体模拟</a>
+
+    <a href="/tag/运动学/index.html"> 运动学</a>
+
+          </div>
+
+      </header>
+
+      <section id="content">
+        <div>
+  <h2>自治智能体之转向力</h2>
+  <p class="time">11 Apr 2015</p>
+
+  <p><b>Demo:</b>点击下面的 canvas 区域，小汽车会模拟自然转向行为并行驶到目标位置</p>
+  <canvas id="canvas">
+        当前的浏览器不支持canvas, canvas是HTML5里才有的标签。
+  </canvas>
+
+  <p><b>转向力计算公式：</b>转向力 = 所需速度 - 当前速度</p>
+  <p>如果通过计算当前速度向量与到目标位置所需速的速度向量的合力来计算转向力也能达到转向的效果，
+    但是这与现实场景不符，因为这样计算出的的转向轨迹会是一个大而缓和的曲线。
+    现实情况总是趋向于尽快完成转向，然后小汽车将直向行驶并达到目的地</p>
+  <p>实现代码</p>
+  <pre id="pre" class="prettyprint">
+
+  </pre>
+
+  <script src="/javascripts/draw.js"></script>
+
+  <script type="text/javascript">
+  ctx.canvas.height  = 280;
+  canvasHeight = canvas.offsetHeight;
+  centerY = canvasHeight/2.0;
+
+  function vehicle() {
+    return {
+      //移动速度
+      speed: 0,
+      speedX: 0,
+      speedY: 0,
+      //旋转速度
+      rotateSpeed: 0.1,
+      angle: 0,
+      //当前位置
+      position: {x:0, y:0},
+      target: {x:0, y:0},
+
+      update: function() {
+        var targetAngle = Math.atan2(this.target.y-this.position.y, this.target.x - this.position.y) - Math.PI/2;
+        // var newPosition =
+        ctx.save();
+        ctx.translate(this.position.x, this.position.y);
+        //绘制车身
+        drawCornerRect("#ff2222", 6, -10, -20, 20, 40);
+        drawCornerRect("#ffbbbb", 3, -6, -14, 12, 28);
+        drawCornerRect("#ffe8e8", 3, -3, -9, 6, 18);
+        //前车灯
+        drawCornerRect("#ff9999", 2, -8, -20, 5, 3);
+        drawCornerRect("#ff9999", 2, 3, -20, 5, 3);
+
+        //四个车轮
+        drawCornerRect("#666666", 2, -12, -15, 3, 9);
+        drawCornerRect("#666666", 2, -12, 6, 3, 9);
+        drawCornerRect("#666666", 2, 9, -15, 3, 9);
+        drawCornerRect("#666666", 2, 9, 6, 3, 9);
+
+        ctx.restore();
+      }
+    };
+  }
+
+  var timer;
+  var car;
+
+  function init() {
+    car = vehicle();
+    car.position = {x:centerX, y:centerY};
+    ctx.clearRect(0,0, canvasWidth, canvasHeight);
+    drawCanvasBackground();
+
+    car.update();
+  }
+
+  // timer = setInterval("enterFrame()", 2);
+
+  function enterFrame() {
+    var difAngle = targetAngle-currentAngle;
+    if (Math.abs(difAngle) > (rotateSpeed*1.5)) {
+      drawByRotate(currentAngle + rotateSpeed * (difAngle > 0 ? 1 : -1));
+    }
+    else {
+      speedX += (targetX - currentX) * springing;
+      speedY += (targetY - currentY) * springing;
+      speedX *= friction;
+      speedY *= friction;
+      drawByPosition(currentX+speedX, currentY+speedY,  targetAngle);
+    }
+  }
+
+  setCanvasScaleIfNeeds();
+  init();
+  </script>
+
+</div>
+
+      </section>
+
+      <!-- 文字淡出 -->
+      <!-- <div id="fadeoutContainer">
+        <div id="topFadeoutCorner">
+        </div>
+
+      </div> -->
+      <svg width="0" height="0">
+        <defs>
+          <clipPath id="clip3">
+             <rect width="568" height="426" rx="85.2" ry="85.2"></rect>
+          </clipPath>
+          <clipPath id="clip4">
+              <ellipse cx="284" cy="213" rx="284" ry="213"></ellipse>
+          </clipPath>
+          <filter id="filter2">
+            <feGaussianBlur stdDeviation="10"></feGaussianBlur>
+          </filter>
+          <filter id="filter">
+            <feGaussianBlur stdDeviation="0.03"></feGaussianBlur>
+          </filter>
+          <filter id="filter2">
+            <feGaussianBlur stdDeviation="5"></feGaussianBlur>
+          </filter>
+          <linearGradient id="gradient" x1="0" y1="00%" x2="0" y2="100%">
+            <stop stop-color="black" offset="0"></stop>
+            <stop stop-color="white" offset="1"></stop>
+          </linearGradient>
+          <clipPath id="clipping4">
+            <rect width="5680" height="2" rx="85.2" ry="85.2"></rect>
+          </clipPath>
+        </defs>
+      </svg>
+      <footer>
+        <p><small>contact me：grenlight@icloud.com</small></p>
+      </footer>
+    </div>
+    <script src="/javascripts/scale.fix.js"></script>
+<script src="/javascripts/prettify/run_prettify.js"></script>
+<link rel="stylesheet" href="/stylesheets/code-prettify-sunburst.css">
+
+</script>
+  </body>
+</html>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="author" content="李金磊" >
+
+    <title>SVG 图形绘制之 marker element</title>
+
+    
+
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <link rel="stylesheet" href="/bower_components/normalize.css/normalize.css" >
+
+    <script src="/javascripts/utils.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div class="wrapper">
+
+      <!-- 背景圆角 -->
+      <div id="fixedRadiusCornerBg">
+        <div id="fixedRadiusCornerBg_left" class="radiusCornerBg">
+        </div>
+        <div id="fixedRadiusCornerBg_right" class="radiusCornerBg">
+        </div>
+      </div>
+
+      <header>
+        <a href="/">
+        <img id="round" style="" src="/images/avatar.png" />
+        <p style="color:#252525;font-size:22px; font-style:bold;">李金磊的 Playground</p>
+        <p style="color:#555555;text-align:left">「Less talk, more coding, professional made wheels.」</p>
+      </a>
+        <p class="view">
+
+
+          <div id="tags">
+            <h3>Tags：</h3>
+            
+    <a href="/tag/Canvas/index.html"> Canvas</a>
+
+    <a href="/tag/Javascript/index.html"> Javascript</a>
+
+    <a href="/tag/动效/index.html"> 动效</a>
+
+    <a href="/tag/SVG/index.html"> SVG</a>
+
+    <a href="/tag/Bezier/index.html"> Bezier</a>
+
+    <a href="/tag/图形图像/index.html"> 图形图像</a>
+
+    <a href="/tag/WebGL/index.html"> WebGL</a>
+
+    <a href="/tag/流体模拟/index.html"> 流体模拟</a>
+
+    <a href="/tag/运动学/index.html"> 运动学</a>
+
+          </div>
+
+      </header>
+
+      <section id="content">
+        <div>
+  <h2>SVG 图形绘制之 marker element</h2>
+  <p class="time">10 Apr 2014</p>
+
+  <svg version="1.1" width="670" height="240" style="background:#353535;margin-bottom:30px">
+    <defs>
+      <marker id="markerCircle" markerWidth="8" markerHeight="8" refX="5" refY="5" markerUnits="strokeWidth">
+          <circle cx="5" cy="5" r="3" style="stroke: none; fill:#aaaa00;"/>
+      </marker>
+
+      <marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6"
+             orient="auto" markerUnits="strokeWidth">
+          <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #aaaa00;" />
+      </marker>
+
+      <marker id="markerSquare" markerWidth="7" markerHeight="7" refX="4" refY="4"
+         orient="auto" markerUnits="strokeWidth">
+         <rect x="1" y="1" width="5" height="5" style="stroke: none; fill:#aaaa00;"/>
+      </marker>
+
+    </defs>
+
+    <path d="M100,10 L250,10 L250,100"
+      style="stroke: #ffffff; stroke-width: 1px; fill: none;
+                   marker-start: url(#markerCircle);
+                   marker-end: url(#markerArrow);"  />
+
+    <path d="M100,110 l120,0 l50,50 l50,20"
+      style="stroke: #ffffff; stroke-width: 5px; fill: none;
+                   marker-start: url(#markerSquare);
+                   marker-mid: url(#markerSquare);
+                   marker-end: url(#markerArrow);" />
+  </svg>
+
+  <p><b>marker element</b></p>
+  <p>SVG markers are used to mark the start, mid and end of a line or path</p>
+  <p>The <b>refX</b> and <b>refY</b> coordinates sets which point inside the marker is to be used as reference point. The reference point is what is positioned at the beginning of the path using the marker. In this example refX and refY are set to the center of the circle, meaning the center of the circle will be placed at the beginining of the path. If you do not set refX and refY they will be assumed to be 0, which will put the upper left corner of the marker at the beginning of the path.</p>
+  <P><b>markerUnits:</b>The size of the marker can be set to scale to fit the stroke width of the path using it.You achieve this effect by setting the markerUnits of the <marker> element to strokeWidth. This is actually the default value for that attribute, so even if you do not set the markerUnits attribute, this is the default behaviour.</p>
+  <pre class="prettyprint">
+//定义marker
+< defs>
+  < marker id="markerCircle" markerWidth="8" markerHeight="8" refX="5" refY="5">
+      < circle cx="5" cy="5" r="3" style="stroke: none; fill:#000000;"/>
+  < /marker>
+  < marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto">
+      < path d="M2,2 L2,11 L10,6 L2,2" style="fill: #aaaa00;" />
+  < /marker>
+< /defs>
+//设置marker
+< path d="M100,110 l120,0 l50,50 l50,20"
+  style="stroke: #ffffff; stroke-width: 1px; fill: none;
+               marker-start: url(#markerSquare);
+               marker-mid: url(#markerSquare);
+               marker-end: url(#markerArrow);" />
+  </pre>
+
+
+</div>
+
+      </section>
+
+      <!-- 文字淡出 -->
+      <!-- <div id="fadeoutContainer">
+        <div id="topFadeoutCorner">
+        </div>
+
+      </div> -->
+      <svg width="0" height="0">
+        <defs>
+          <clipPath id="clip3">
+             <rect width="568" height="426" rx="85.2" ry="85.2"></rect>
+          </clipPath>
+          <clipPath id="clip4">
+              <ellipse cx="284" cy="213" rx="284" ry="213"></ellipse>
+          </clipPath>
+          <filter id="filter2">
+            <feGaussianBlur stdDeviation="10"></feGaussianBlur>
+          </filter>
+          <filter id="filter">
+            <feGaussianBlur stdDeviation="0.03"></feGaussianBlur>
+          </filter>
+          <filter id="filter2">
+            <feGaussianBlur stdDeviation="5"></feGaussianBlur>
+          </filter>
+          <linearGradient id="gradient" x1="0" y1="00%" x2="0" y2="100%">
+            <stop stop-color="black" offset="0"></stop>
+            <stop stop-color="white" offset="1"></stop>
+          </linearGradient>
+          <clipPath id="clipping4">
+            <rect width="5680" height="2" rx="85.2" ry="85.2"></rect>
+          </clipPath>
+        </defs>
+      </svg>
+      <footer>
+        <p><small>contact me：grenlight@icloud.com</small></p>
+      </footer>
+    </div>
+    <script src="/javascripts/scale.fix.js"></script>
+<script src="/javascripts/prettify/run_prettify.js"></script>
+<link rel="stylesheet" href="/stylesheets/code-prettify-sunburst.css">
+
+</script>
+  </body>
+</html>

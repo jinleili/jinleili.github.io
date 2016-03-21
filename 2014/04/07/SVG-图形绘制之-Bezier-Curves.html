@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="author" content="李金磊" >
+
+    <title>SVG 图形绘制之 Bezier Curves</title>
+
+    
+
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <link rel="stylesheet" href="/bower_components/normalize.css/normalize.css" >
+
+    <script src="/javascripts/utils.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div class="wrapper">
+
+      <!-- 背景圆角 -->
+      <div id="fixedRadiusCornerBg">
+        <div id="fixedRadiusCornerBg_left" class="radiusCornerBg">
+        </div>
+        <div id="fixedRadiusCornerBg_right" class="radiusCornerBg">
+        </div>
+      </div>
+
+      <header>
+        <a href="/">
+        <img id="round" style="" src="/images/avatar.png" />
+        <p style="color:#252525;font-size:22px; font-style:bold;">李金磊的 Playground</p>
+        <p style="color:#555555;text-align:left">「Less talk, more coding, professional made wheels.」</p>
+      </a>
+        <p class="view">
+
+
+          <div id="tags">
+            <h3>Tags：</h3>
+            
+    <a href="/tag/Canvas/index.html"> Canvas</a>
+
+    <a href="/tag/Javascript/index.html"> Javascript</a>
+
+    <a href="/tag/动效/index.html"> 动效</a>
+
+    <a href="/tag/SVG/index.html"> SVG</a>
+
+    <a href="/tag/Bezier/index.html"> Bezier</a>
+
+    <a href="/tag/图形图像/index.html"> 图形图像</a>
+
+    <a href="/tag/WebGL/index.html"> WebGL</a>
+
+    <a href="/tag/流体模拟/index.html"> 流体模拟</a>
+
+    <a href="/tag/运动学/index.html"> 运动学</a>
+
+          </div>
+
+      </header>
+
+      <section id="content">
+        <div>
+  <h2>SVG 图形绘制之 Bezier Curves</h2>
+  <p class="time">07 Apr 2014</p>
+
+  <svg version="1.1" width="670" height="240" style="background:#353535;margin-bottom:30px">
+    <!-- 绘制两个相交的圆 -->
+    <path d="M40,20  A30,30 0 0,0 70,70"
+    style="stroke: #ffffff; stroke-width:2; fill:none;"/>
+    <path d="M40,20  A30,30 0 1,0 70,70"
+        style="stroke: #ff0000; stroke-width:2; fill:none;"/>
+    <path d="M40,20  A30,30 0 1,1 70,70"
+        style="stroke: #00ff00; stroke-width:2; fill:none;"/>
+    <path d="M40,20  A30,30 0 0,1 70,70"
+        style="stroke: #0000ff; stroke-width:2; fill:none;"/>
+
+    <!-- 绘制任一弧度 -->
+    <path d="M115,80 L100,20  A30,30 0 0,1 130,20 L115,80"
+        style="stroke: #ffffff; stroke-width:1; fill:#ffffff;"/>
+    <path d="M180,20  A30,30 0 0,1 180,80"
+        style="stroke: #ffffff; stroke-width:1; fill:#ffffff;"/>
+    <path d="M400,80 L375,20  A30,30 0 0,1 425,20 L400,80"
+        style="stroke: #ffffff; stroke-width:1; fill:#ffffff;"/>
+
+    <path d="M40,140 A30,50 0 0,1 120,190"
+     style="stroke:#999900; fill:none;"/>
+
+     <!-- Cubic Bezier Curves -->
+    <path d="M150,150 C175,180 225,120 250,150"
+     style="stroke: #999900; fill:none;"/>
+     <path d="M300,100 L350,100 a50,25 0 0,0 100,100 q50,-50 200,-170 Z"
+      style="stroke: #006666; fill: none;"/>
+  </svg>
+
+  <p>直线，折线，矩形这类直来直去的没啥可说的，主要是弧线，曲线的绘制</p>
+  <p><b>弧形（Arcs）</b></p>
+  <p>绘制弧形可以使用「A」或「a」命令：the uppercase command (A) uses absolute coordinates for its endpoint, where the lowercase command (a) uses relative coordinates (relative to the start point)</p>
+  <p>参数说明：The radius of the arc is set by the two first parameters set on the A command. The first parameter is rx (radius in x-direction) and the second is ry (radius in y-direction). Setting rx and ry to the same value will result in a circular arc. Setting rx and ry to different values will result in an elliptical arc. In the example above rx was set to 30 and ry to 50.</p>
+<p>
+The third parameter set on the A command is the x-axis-rotation. This sets the rotation of the arc's x-axis compared to the normal x-axis. In the above example the x-axis-rotation is set to 0. Most of the time you will not need to change this parameter.</p>
+<p>
+The fourth and fifth parameters are the large-arc-flag and sweep-flag parameters. The large-arc-flag determines whether to draw the smaller or bigger arc satisfying the start point, end point and rx and ry. Here is an example drawing 4 arcs each with different combinations of the large-arc-flag and sweep-flag:</p>
+  <pre class="prettyprint">
+//绘制两个相交的圆
+//large-arc-flag 设置为0，表示按照可能的最小弧度绘制
+d="M40,20  A30,30 0 0,0 70,70"
+//large-arc-flag 设置为1，表示按照可能的最大弧度绘制
+d="M40,20  A30,30 0 1,0 70,70"
+//large-arc-flag 设置为1，sweep-flag 设置为1，表示按照可能的最大弧度镜像绘制
+d="M40,20  A30,30 0 1,1 70,70"
+//large-arc-flag 设置为0，sweep-flag 设置为1，表示按照可能的最小弧度镜像绘制
+d="M40,20  A30,30 0 0,1 70,70"
+  </pre>
+
+  <p>&nbsp;</p>
+  <p><b>贝塞尔曲线（Bezier Curves）</b></p>
+  <p>二次曲线(Quadratic Bezier Curves)命令：「Q」或「q」,</p>
+  <p>三次曲线(Cubic Bezier Curves)命令：「C」或「c」,</p>
+
+  <pre class="prettyprint">
+d="M150,150 C175,180 225,120 250,150"
+d="M300,100 L350,100 a50,25 0 0,0 100,100 q50,-50 200,-170 Z"
+  </pre>
+  <p>&nbsp;</p>
+
+
+
+</div>
+
+      </section>
+
+      <!-- 文字淡出 -->
+      <!-- <div id="fadeoutContainer">
+        <div id="topFadeoutCorner">
+        </div>
+
+      </div> -->
+      <svg width="0" height="0">
+        <defs>
+          <clipPath id="clip3">
+             <rect width="568" height="426" rx="85.2" ry="85.2"></rect>
+          </clipPath>
+          <clipPath id="clip4">
+              <ellipse cx="284" cy="213" rx="284" ry="213"></ellipse>
+          </clipPath>
+          <filter id="filter2">
+            <feGaussianBlur stdDeviation="10"></feGaussianBlur>
+          </filter>
+          <filter id="filter">
+            <feGaussianBlur stdDeviation="0.03"></feGaussianBlur>
+          </filter>
+          <filter id="filter2">
+            <feGaussianBlur stdDeviation="5"></feGaussianBlur>
+          </filter>
+          <linearGradient id="gradient" x1="0" y1="00%" x2="0" y2="100%">
+            <stop stop-color="black" offset="0"></stop>
+            <stop stop-color="white" offset="1"></stop>
+          </linearGradient>
+          <clipPath id="clipping4">
+            <rect width="5680" height="2" rx="85.2" ry="85.2"></rect>
+          </clipPath>
+        </defs>
+      </svg>
+      <footer>
+        <p><small>contact me：grenlight@icloud.com</small></p>
+      </footer>
+    </div>
+    <script src="/javascripts/scale.fix.js"></script>
+<script src="/javascripts/prettify/run_prettify.js"></script>
+<link rel="stylesheet" href="/stylesheets/code-prettify-sunburst.css">
+
+</script>
+  </body>
+</html>

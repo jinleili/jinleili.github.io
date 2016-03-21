@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <script src="/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="/polymer-module/gl-popmenu.html">
+  </head>
+  <body style="background-color:#fafafa;">
+
+
+    <div style="font-size:18px; color:#454545; margrin:30px;">
+      <p>这个popMenu出来后，点击屏幕任意其他位置，popMenu都会关闭。</p>
+    </div>
+<div id="customControl">
+</div>
+    <!-- <gl-popmenu items="笔记,复制,维基百科" style="margin:100px;"></gl-popmenu> -->
+<button onclick="showMenu()">adsadsa</button>
+
+<script type="text/javascript">
+    var menu;
+    function showMenu() {
+      if (menu) {
+        document.removeChild(menu);
+      }
+
+      menu = document.createElement("gl-popmenu");
+      menu.setAttribute("items","剪切,复制,删除,你要怎样");
+      document.getElementById("customControl").appendChild(menu);
+    }
+    // menu.showMenu();
+</script>
+
+  </body>
+</html>
