@@ -73,7 +73,7 @@
    var drawCost = document.getElementById('drawCost');
 
    var requestStartTime = (new Date()).getTime();
-   request('./data3.txt', 15665, function(arr) {
+   request('./data/data3.txt', 15665, function(arr) {
        var requestEndTime = (new Date()).getTime();
        dataCost.innerHTML = (requestEndTime - requestStartTime) / 1000;
 
