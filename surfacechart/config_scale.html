@@ -16,7 +16,16 @@
 <body>
 <div id="root">
     <h3> 3D 曲面图表 Demo </h3>
+    <p>透视投影</p>
     <div id="surfaceChart_Container" style="display: block; width:600px; height: 500px;">
+
+    </div>
+    <p>正交投影</p>
+    <div id="surfaceChart_Container1" style="display: block; width:600px; height: 500px;">
+
+    </div>
+    <p>不显示辅助线</p>
+    <div id="surfaceChart_Container2" style="display: block; width:600px; height: 500px;">
 
     </div>
 </div>
@@ -68,6 +77,7 @@
        var params = {
            width: 600,  // 必设参数,  图表在屏幕上的宽度
            height: 500, // 必设参数,  一般高度要设置得比宽度小,图表会显得比较漂亮
+           usePerspective: true, // 可选参数, 开启透视效果, 默认为 true
            showScale: true, // 可选参数, 是否显示辅助线及刻度, 默认为 true
            scaleColor: '#0099fa', // 可选参数, 辅助线及刻度的颜色, 默认为与 title 颜色一样
            title: '3D 曲面图表 - 0', // 可选参数, 图表的名称, 默认为空
@@ -80,8 +90,29 @@
        // 将曲面图显示到网页
        container.appendChild(chart.domElement);
 
+        orthogonal();
        addAnotherChart();
    });
+
+   function orthogonal() {
+       request('./data/data0.txt', 28, function(arr) {
+           // 下边 "可选参数" 的意思是指: 如果不想指定这个字段的信息, 就在 params 里删除这个字段
+           var params = {
+               width: 600,  // 必设参数,  图表在屏幕上的宽度
+               height: 500, // 必设参数,  一般高度要设置得比宽度小,图表会显得比较漂亮
+               usePerspective: false, // 可选参数, 开启透视效果, 默认为 true
+               showScale: true,
+               scaleColor: '#0099fa',
+               title: '3D 曲面图表 - 0',
+               fontColor: '#fafafa',
+               backgroundColor: '#353535',
+               surfaceColors:  ['0x215c91',  '0x70af48', '0x3769bd', '0xfec536', '0xa5a5a5', '0xf27934', '0x6aa3d9']
+           };
+           var chart = new SurfaceChart(arr, params);
+           document.getElementById('surfaceChart_Container1').appendChild(chart.domElement);
+
+       });
+   }
 
    function addAnotherChart() {
        request('./data/data1.txt', 20, function(arr) {
@@ -95,7 +126,7 @@
                surfaceColors:  ['#9fbadb',  '#7ca5d3', '#5296d3', '#4180b7', '#4179ab', '#215c91', '#3769bd']
            };
            var chart = new SurfaceChart(arr, params);
-           container.appendChild(chart.domElement);
+           document.getElementById('surfaceChart_Container2').appendChild(chart.domElement);
        });
    }
 </script>
