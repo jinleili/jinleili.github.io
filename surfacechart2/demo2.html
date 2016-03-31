@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3D 曲面图表 Demo2</title>
+    <style>
+        #root {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translate(-50%, 0);
+            color: #353535;
+        }
+    </style>
+</head>
+<body>
+<div id="root">
+    <h3> 3D 曲面图表 Demo </h3>
+    <div id="surfaceChart_Container" style="display: block; width:600px; height: 500px;">
+
+    </div>
+</div>
+
+<script type="text/javascript" src="./bin/surfacechart.min.js"></script>
+<script type="text/javascript">
+   function  request(url, completion) {
+       var xhr = new XMLHttpRequest();
+       xhr.overrideMimeType("text/plain; charset=utf-8");
+        xhr.onreadystatechange = function() {
+            if (this.readyState === this.DONE) {
+                if (this.status === 200 || this.status === 0) {
+                    var arr = JSON.parse(this.responseText);
+                    completion(arr);
+                }
+            }
+        }
+        xhr.open("GET", url, true);
+        xhr.send();
+    };
+
+   var container = document.getElementById('surfaceChart_Container');
+
+   request('./data/wwh.txt', function(arr) {
+           // 下边 "可选参数" 的意思是指: 如果不想指定这个字段的信息, 就在 params 里删除这个字段
+       var params = {
+           width: 600,  // 必设参数,  图表在屏幕上的宽度
+           height: 500, // 必设参数,  一般高度要设置得比宽度小,图表会显得比较漂亮
+           usePerspective: true, // 可选参数, 开启透视效果, 默认为 true
+           showScale: true, // 可选参数, 是否显示辅助线及刻度, 默认为 true
+           scaleColor: '#0099fa', // 可选参数, 辅助线及刻度的颜色, 默认为与 title 颜色一样
+           title: '3D 曲面图表 - 0', // 可选参数, 图表的名称, 默认为空
+           fontColor: '#fafafa', // 可选参数, 图表上文字的颜色, 默认为0xfafafa
+           backgroundColor: '#353535', // 可选参数, 图表背景颜色, 默认为 0x353535
+           surfaceColors:  ['0x00ffff',  '0x00ff00', '0x972323', '0xfe3333', '0xa56666', '0x0000ff', '0x00ff00'] // 可选参数, 曲面顶点颜色,如果要指定, 数组长度至少为 7 位.
+       };
+       // 生成图表实例
+       var chart = new SurfaceChart(arr, params);
+       // 将曲面图显示到网页
+       container.appendChild(chart.domElement);
+
+       addAnotherChart();
+   });
+
+   function addAnotherChart() {
+       request('./data/wwh.txt', function(arr) {
+           var params = {
+               width: 600,
+               height: 500,
+               showScale: false,
+               title: '3D 曲面图表 - 1',
+               fontColor: '#353535',
+               backgroundColor: '#efefef',
+               surfaceColors:  ['#9fbadb',  '#7c1221', '#521212', '#411212', '#412121', '#215c91', '#3769bd']
+           };
+           var chart = new SurfaceChart(arr, params);
+           container.appendChild(chart.domElement);
+       });
+   }
+</script>
+
+</body>
+</html>
