@@ -10,21 +10,30 @@
             padding: 0px;
             margin: 0px;
         }
-        #root {
+        body {
+            background-color: #fafafa;
+        }
+        #Container {
             position: absolute;
             top: 0px;
             left: 50%;
             transform: translate(-50%, 0);
             background-color: #353535;
             display: block;
+            width:100vw;
+            max-width:600px;
             height: 100vh;
+            min-height: 300px;
         }
     </style>
 </head>
 <body>
-<div id="root">
-    <div id="Container" style="display: block;width:100vw;max-width:600px; height:100vh; min-height: 300px;">
-
+<div id="Container" >
+    <div style="color: #efefef; font-size: 18px; padding: 25px;position:absolute;">
+        <p>绘制这个波形动画的主要步骤:</p>
+        <p>- 计算出呈正态分布的波的振幅数组及波长数组;</p>
+        <p>- 定义一个步增的波形起始角度;</p>
+        <p>- 每一帧遍历 x 轴上的顶点,基于第一步计算的振幅及波长更新顶点 y 坐标;</p>
     </div>
 </div>
 <script type="text/javascript" src="../bin/gren.js"></script>
