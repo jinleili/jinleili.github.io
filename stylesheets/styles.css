@@ -46,6 +46,10 @@ canvas, img {
   font-size: 12px; color: #454545;
 }
 
+ul {
+  margin: 25px;
+}
+
 a {
   color: #333333;
 }
