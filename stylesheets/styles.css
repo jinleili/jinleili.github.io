@@ -17,9 +17,14 @@ body {
   background-color: #efefef;
 }
 
+figure {
+  margin: 15px;
+}
+
 h3 {
   font-size:20px;
   font-weight: bold;
+  margin: 15px;
 }
 
 /*渲染优化*/
@@ -33,10 +38,10 @@ canvas, img {
 
 .wrapper {
   width:100vw;
-  height: 100vh;
-  min-height: 380px;
   min-width:320px;
   max-width:720px;
+  min-height: 380px;
+
   padding: 0px 0px 50px 0px;
   margin:0;
   position: absolute;

@@ -13,3 +13,5 @@ or
 `​`` html
 <a href="#">Hello world</a>
 `​``
+在命令行高亮代码 $ $ rougify foo.rb
+生成语法高亮 CSS: $  rougify style monokai.sublime > rouge.css
