@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,shrink-to-fit=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="author" content="李金磊" >
+
+  <title>Essl 计算 Mandelbrot Set</title>
+
+  <link rel="stylesheet" href="/stylesheets/styles.css">
+</head>
+<body>
+<div class="wrapper" id="wrapper">
+  <script type="text/javascript" src="/bin/gren.js"></script>
+  <h3>曼德博分形</h3>
+<div id="Container" style="width:100%" >
+
+</div>
+
+<div>
+ ``` javascript
+ precision highp float;
+
+ varying vec2 pixel;
+
+ const int maxRepeats = 30;
+ const vec2 topRight = vec2(1, -1);
+ const vec2 bottomLeft = vec2(-2, 1);
+ float drow = topRight.y - bottomLeft.y;
+ float dcol = topRight.x - bottomLeft.x;
+
+ vec2 multiply(vec2 a, vec2 b) {
+     return vec2(a.x*b.x - a.y*b.y,  a.y*b.x + a.x*b.y);
+ }
+ void main(void) {
+     vec2 Z = vec2(0, 0);
+     vec2 p = vec2(bottomLeft.x + (pixel.x+0.5)*dcol, bottomLeft.y + (pixel.y+0.5)*drow);
+     int stepper = 0;
+
+     for (int i=0; i<maxRepeats; i++) {
+         if (abs(dot(Z, Z)) > 4.0) {
+             break;
+         }
+         Z = multiply(Z, Z) + p;
+         stepper += 1;
+     }
+
+     if (stepper == maxRepeats) {
+         gl_FragColor = vec4(Z.x, Z.y,  0.5, 1.);
+     } else {
+         gl_FragColor = vec4(0., 0., 0., 1.);
+     }
+ }
+ ```
+</div>
+<script type="text/javascript" src="/bin/effects.js"></script>
+<script type="text/javascript">
+ var container = document.getElementById('Container');
+ var fractal = new EFFECT.MandelbrotSet(container.offsetWidth, container.offsetWidth/2);
+ container.appendChild(fractal.domElement);
+</script>
+</div>
+
+</body>
+</html>
