@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,shrink-to-fit=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="H5Game">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name='format-detection' content='telephone=no'>
+
+  <meta name="apple-touch-fullscreen" content="yes" >
+  <meta name="screen-orientation" content="portrait">
+  <meta name="x5-orientation" content="portrait"/>
+
+  <meta name="full-screen" content="yes">
+  <meta name="360-fullscreen" content="true">
+  <meta name="x5-fullscreen" content="true">
+
+  <meta name="x5-page-mode" content="app"/>
+
+  <meta name="author" content="李金磊" >
+
+  <title>Essl 计算 Mandelbrot Set</title>
+
+  <link rel="stylesheet" href="/stylesheets/styles.css">
+  <link rel="stylesheet" href="/stylesheets/syntax.css">
+
+</head>
+<body>
+<div class="wrapper" id="wrapper">
+  <script type="text/javascript" src="/bin/gren.js"></script>
+  <h3>曼德博分形</h3>
+<div id="Container" style="width:100%" >
+
+</div>
+
+<div>
+
+    <figure class="highlight"><pre><code class="language-c" data-lang="c"> <span class="n">precision</span> <span class="n">highp</span> <span class="kt">float</span><span class="p">;</span>
+
+ <span class="n">varying</span> <span class="n">vec2</span> <span class="n">pixel</span><span class="p">;</span>
+
+ <span class="k">const</span> <span class="kt">int</span> <span class="n">maxRepeats</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+ <span class="k">const</span> <span class="n">vec2</span> <span class="n">topRight</span> <span class="o">=</span> <span class="n">vec2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+ <span class="k">const</span> <span class="n">vec2</span> <span class="n">bottomLeft</span> <span class="o">=</span> <span class="n">vec2</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+ <span class="kt">float</span> <span class="n">drow</span> <span class="o">=</span> <span class="n">topRight</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">bottomLeft</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+ <span class="kt">float</span> <span class="n">dcol</span> <span class="o">=</span> <span class="n">topRight</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">bottomLeft</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+
+ <span class="n">vec2</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">vec2</span> <span class="n">a</span><span class="p">,</span> <span class="n">vec2</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="n">vec2</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="o">*</span><span class="n">b</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span><span class="o">*</span><span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">,</span>  <span class="n">a</span><span class="p">.</span><span class="n">y</span><span class="o">*</span><span class="n">b</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="o">*</span><span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+ <span class="p">}</span>
+ <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">vec2</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">vec2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+     <span class="n">vec2</span> <span class="n">p</span> <span class="o">=</span> <span class="n">vec2</span><span class="p">(</span><span class="n">bottomLeft</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">pixel</span><span class="p">.</span><span class="n">x</span><span class="o">+</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">)</span><span class="o">*</span><span class="n">dcol</span><span class="p">,</span> <span class="n">bottomLeft</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">pixel</span><span class="p">.</span><span class="n">y</span><span class="o">+</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">)</span><span class="o">*</span><span class="n">drow</span><span class="p">);</span>
+     <span class="kt">int</span> <span class="n">stepper</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+     <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">maxRepeats</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+         <span class="k">if</span> <span class="p">(</span><span class="n">abs</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">Z</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+             <span class="k">break</span><span class="p">;</span>
+         <span class="p">}</span>
+         <span class="n">Z</span> <span class="o">=</span> <span class="n">multiply</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span> <span class="o">+</span> <span class="n">p</span><span class="p">;</span>
+         <span class="n">stepper</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+     <span class="p">}</span>
+
+     <span class="k">if</span> <span class="p">(</span><span class="n">stepper</span> <span class="o">==</span> <span class="n">maxRepeats</span><span class="p">)</span> <span class="p">{</span>
+         <span class="n">gl_FragColor</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">Z</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Z</span><span class="p">.</span><span class="n">y</span><span class="p">,</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">.);</span>
+     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+         <span class="n">gl_FragColor</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="mi">0</span><span class="p">.,</span> <span class="mi">0</span><span class="p">.,</span> <span class="mi">0</span><span class="p">.,</span> <span class="mi">1</span><span class="p">.);</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+    </code></pre></figure>
+</div>
+<script type="text/javascript" src="/bin/effects.js"></script>
+<script type="text/javascript">
+ var container = document.getElementById('Container');
+ var fractal = new EFFECT.MandelbrotSet(container.offsetWidth, container.offsetWidth/1.5);
+ container.appendChild(fractal.domElement);
+</script>
+</div>
+
+</body>
+</html>

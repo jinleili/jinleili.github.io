@@ -38,6 +38,7 @@ canvas, img {
 
 .wrapper {
   width:100vw;
+  height:100vh;
   min-width:320px;
   max-width:720px;
   min-height: 380px;
