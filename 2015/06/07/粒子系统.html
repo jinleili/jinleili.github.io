@@ -23,7 +23,7 @@
 
   <meta name="author" content="李金磊" >
 
-  <title>分形之科赫曲线</title>
+  <title>粒子系统</title>
 
   <link rel="stylesheet" href="/stylesheets/styles.css">
   <link rel="stylesheet" href="/stylesheets/syntax.css">
@@ -57,17 +57,17 @@
     }
 </style>
 <div id="Container" >
-    <h3>科赫曲线</h3>
+    <h3>简单的粒子效果</h3>
 
 </div>
 <div>
 
 </div>
-<script type="text/javascript" src="/bin/fractal.js"></script>
+<script type="text/javascript" src="/bin/particle.js"></script>
 <script type="text/javascript">
     var container = document.getElementById('Container');
-    var fractal = new FRACTAL.KochCurve(container.offsetWidth, container.offsetHeight);
-    container.appendChild(fractal.domElement);
+    var particle = new PARTICLE.SimpleSmoke(container.offsetWidth, container.offsetHeight);
+    container.appendChild(particle.domElement);
 </script>
 </div>
 
