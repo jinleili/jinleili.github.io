@@ -1,0 +1,104 @@
+* {
+    outline: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body, div, ul, li, p, h1, h2, h3, h4, h5, h6, table, td, tr, tbody, thead, tfoot, article, input, textarea, select, button, .ui {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #efefef;
+    font-size: 14px;
+    font-family: "PingFang SC", "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, "Microsoft YaHei", "微软雅黑", sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    -webkit-font-smoothing: antialiased;
+    color:#fff;
+    font-weight: 400;
+}
+
+.fullScreen {
+    position: fixed;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    top: 0px; left: 0px;
+}
+
+.fillet {
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.block {
+    display:block;
+}
+
+.flex {
+    display: -webkit-flex;
+    display: flex;
+}
+
+.center {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    -webkit-transform: translate(-50%, -50%);/* iOS 8 need */
+    transform: translate(-50%, -50%);
+    display: block;
+}
+
+.h-center {
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.absolute {
+   position: absolute;
+}
+
+.relative {
+    position: relative;
+}
+
+.radius4 {
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+.boxSizing {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+#wrapper {
+    position: absolute;
+    top: 0vh;
+    left: 50vw;
+    -webkit-transform: translate(-50%, 0);/* iOS 8 need */
+    transform: translate(-50%, 0);
+    display: block;
+    width: 100vw;
+    max-width: 1024px;
+}
+
+#hdgz {
+    font-size: 12px;
+    line-height: 18px;
+}
+#hdgz span{
+    color:#da6125;
+    padding: 3px 8px;
+    background-color: white;
+}
+#hdgz p {
+    margin:14px 0px;
+}
+#hdgz ul {
+    margin: 10px 16px 16px 16px;
+}
