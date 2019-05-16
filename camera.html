@@ -6,7 +6,7 @@
   <meta name="viewport"
     content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,shrink-to-fit=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>camera + webassembly</title>
+  <title>camera</title>
   <style type="text/css">
     html,
     body {
@@ -35,11 +35,9 @@
 </head>
 
 <body>
-  <div class="center" style="width:640px; height:640px; background-color:gray; position:relative">
-    <!-- Safari 下，如果 video 的 display 设置为 none，则捕捉不到画面 -->
-    <video id="video" loop autoplay style="">
-    </video>
-  </div>
+  <!-- Safari 下，如果 video 的 display 设置为 none，则捕捉不到画面 -->
+  <video class="center" id="video" loop autoplay style="">
+  </video>
 
 
   <script type="text/javascript">
