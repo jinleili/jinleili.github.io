@@ -1,93 +1,85 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>camera + webassembly</title>
-    <style type="text/css">
-      html, body {
-        padding: 0px;
-        margin: 0px;
-      }
-      body {
-        background-color: #fafafa;
-        font-size: 18px;
-        color:#454545;
-        line-height: 22px;
-      }
-      .center {
-        position: fixed;
-        top: 50vh;
-        left: 50vw;
-        -webkit-transform: translate(-50%, -50%);/* iOS 8 need */
-        transform: translate(-50%, -50%);
-        display: block;
-      }
-    </style>
 
-  </head>
-  <body>
-    <div class="center" style="width:640px; height:640px; background-color:gray; position:relative">
-      <!-- Safari 下，如果 video 的 display 设置为 none，则捕捉不到画面 -->
-        <video id="video" loop autoplay style=""> 
-          </video>
-        <canvas id="canvas" width="640" height="640" style="position:absolute; z-index: 100; top:0px; left:0px;"></canvas>        
-    </div>
-    
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,shrink-to-fit=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>camera + webassembly</title>
+  <style type="text/css">
+    html,
+    body {
+      padding: 0px;
+      margin: 0px;
+    }
 
-    <div id="not_suport" class="center" style="display:none;">
-        <p>当前浏览器不支持 WebAssembly！</p>
-        <p>支持 WebAssembly 的浏览器有：</p>
-        <ul>
-          <li>FireFox 54+</li>
-          <li>Chrome 59+</li>
-          <li>Chrome for Android 61+</li>  
-          <li>Safari on iOS 11+ </li>         
-        </ul>
-    </div>
+    body {
+      background-color: #fafafa;
+      font-size: 18px;
+      color: #454545;
+      line-height: 22px;
+    }
 
-    <script type="text/javascript">
-      var not_suport = document.getElementById("not_suport");
-      var canvas = document.getElementById('canvas');
-      var context = canvas.getContext('2d');
+    .center {
+      position: fixed;
+      top: 50vh;
+      left: 50vw;
+      -webkit-transform: translate(-50%, -50%);
+      /* iOS 8 need */
+      transform: translate(-50%, -50%);
+      display: block;
+    }
+  </style>
 
-      var videoEle = document.getElementById('video');
+</head>
 
-         // 判断是否支持 WebAssembly
-      if (!('WebAssembly' in window)) {
-        not_suport.style.display = "block"
-      } else {
-        getCameraStream();
-      }
+<body>
+  <div class="center" style="width:640px; height:640px; background-color:gray; position:relative">
+    <!-- Safari 下，如果 video 的 display 设置为 none，则捕捉不到画面 -->
+    <video id="video" loop autoplay style="">
+    </video>
+  </div>
 
-      function getCameraStream() {
-        videoEle.addEventListener("loadeddata", function () {
-              canvas.setAttribute('height', videoEle.videoHeight);
-              canvas.setAttribute('width', videoEle.videoWidth);
-              drawCanvas();
-          });
 
-        navigator.mediaDevices.getUserMedia({video: true})
+  <script type="text/javascript">
+    // var canvas = document.getElementById('canvas');
+    // var context = canvas.getContext('2d');
+    var videoEle = document.getElementById('video');
+
+    getCameraStream();
+
+    function getCameraStream() {
+      videoEle.addEventListener("loadeddata", function () {
+        // canvas.setAttribute('height', videoEle.videoHeight);
+        // canvas.setAttribute('width', videoEle.videoWidth);
+        // drawCanvas();
+      });
+
+      navigator.mediaDevices.getUserMedia({ video: true })
         .then((stream) => {
           videoEle.srcObject = stream;
+          video.onloadedmetadata = function (e) {
+            video.play();
+          };
+          
         })
-        .catch(function(err) {
-            console.log(err);
+        .catch(function (err) {
+          console.log(err);
         });
-      }
+    }
 
-      function drawCanvas() {
-        context.drawImage(video, 0, 0);
-        pixels = context.getImageData(0, 0, videoEle.videoWidth, videoEle.videoHeight);
-        requestAnimationFrame(drawCanvas);  
-      }
+    function drawCanvas() {
+      context.drawImage(video, 0, 0);
+      pixels = context.getImageData(0, 0, videoEle.videoWidth, videoEle.videoHeight);
+      requestAnimationFrame(drawCanvas);
+    }
 
 
-    </script>
+  </script>
 
   <!-- <script async src="build/bundle.js"></script> -->
 
-  </body>
+</body>
+
 </html>
