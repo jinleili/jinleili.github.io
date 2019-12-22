@@ -86,6 +86,16 @@ header[role=banner] {
     padding:40px 0 20px
 }
 
+h1.logo {
+    display: table-cell;
+    height: 76px;
+    line-height: 76px;
+    padding-left: 96px;
+    padding-right: 20px;
+    background: url(images/logo_1x.png) no-repeat;
+    background:-webkit-image-set(url(images/logo_1x.png) 1x, url(images/logo_2x.png) 2x, url(images/logo_3x.png) 3x) no-repeat
+}
+
 img.center-fit {
     display: block;
     max-width: 100%;
@@ -138,6 +148,10 @@ footer#footer p {
         padding:20px 0 10px
     }
 
+    a#download {
+        margin:20px auto
+    }
+
     footer#footer {
         margin-top: 20px;
         padding:20px 0
@@ -149,6 +163,14 @@ footer#footer p {
         width:90%
     }
 
+    ul, ol {
+        list-style-position:inside
+    }
+
+    h1.logo {
+        font-size: 1.6em;
+        padding-left:86px
+    }
 }
 
 :root {
