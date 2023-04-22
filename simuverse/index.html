@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
 
-<!DOCTYPE html>
+<!doctype html>
 <html>
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>simuverse</title>
     <style type="text/css">
@@ -17,6 +17,17 @@
 
 <body>
     <script type="module">
+        if ('navigator' in window && 'gpu' in navigator) {
+            navigator.gpu.requestAdapter().then(adapter => {
+                // 浏览器支持 WebGPU
+            }).catch(error => {
+                alert("此浏览器版本不支持 WebGPU");
+            });
+        } else {
+            // 浏览器不支持 navigator.gpu
+            alert("此浏览器版本不支持 WebGPU");
+        }
+
         import init from "./simuverse.js";
         window.addEventListener("load", () => {
             init();
