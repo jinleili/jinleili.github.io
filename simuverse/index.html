@@ -115,7 +115,7 @@
         }
 
         async function loadSimuverse() {
-            const module = await import(`simuverse.js`);
+            const module = await import(`./simuverse.js`);
             module.default().then((instance) => {
                 hideLoading();
             }, (e) => {
