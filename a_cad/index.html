@@ -64,10 +64,10 @@
         }
         window.onresize = window_resized;
     </script>
-    
 
-<link rel="preload" href="./web_app-8385cf1b45f9e71d_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
-<link rel="modulepreload" href="./web_app-8385cf1b45f9e71d.js"></head>
+
+<link rel="preload" href="/web_app-2b49da008aaf93db_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+<link rel="modulepreload" href="/web_app-2b49da008aaf93db.js"></head>
 
 <body>
     <div id="canvas_container">
@@ -82,19 +82,20 @@
         </div>
     </div>
 
-
-<script type="module">import init from './web_app-8385cf1b45f9e71d.js';init('./web_app-8385cf1b45f9e71d_bg.wasm');</script>
+    
+    <script type="module">import init from '/web_app-2b49da008aaf93db.js';init('/web_app-2b49da008aaf93db_bg.wasm');</script>
 
     <script type="module">
         if ('navigator' in window && 'gpu' in navigator) {
             navigator.gpu.requestAdapter().then(adapter => {
                 // 浏览器支持 WebGPU
                 hideLoading();
+                setTimeout(getFocus, 1000);
             }).catch(error => {
                 showAlert();
             });
         } else {
-            // 浏览器不支持 navigator.gpu
+            // 当前浏览器没有 navigator.gpu 字段，不支持 WebGPU
             showAlert();
         }
 
@@ -112,7 +113,15 @@
                 loading.style.display = "none";
             }
         }
+
+        // 让画布默认获得焦点
+        function getFocus() {
+            let ele = document.getElementById("canvas_container");
+            let canvasNode = ele.querySelectorAll("canvas")[0];
+            canvasNode.focus();
+        }
     </script>
+
 
 
 
