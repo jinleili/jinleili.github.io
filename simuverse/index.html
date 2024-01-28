@@ -58,14 +58,21 @@
         var can_resize_canvas = true
         // Called by rust
         window.canvas_resize_completed = function () {
+            console.log("canvas_resize_completed");
             can_resize_canvas = true;
         }
 
         window.dispatch_resize_event = function () {
-            can_resize_canvas = false;
             let elem = document.getElementById("simuverse_container");
-            if (elem != null) {
-                elem.dispatchEvent(new Event("canvas_size_need_change"));
+            let canvas = elem.getElementsByTagName("canvas")[0];
+            if (canvas != null) {
+                let ratio = window.devicePixelRatio;
+                canvas.width = elem.clientWidth * ratio;
+                canvas.height = elem.clientHeight * ratio;
+                canvas.style.width = elem.clientWidth + 'px';
+                canvas.style.height = elem.clientHeight + 'px';
+                canvas.style.maxWidth = elem.clientWidth + 'px';
+                canvas.style.maxHeight = elem.clientHeight + 'px';
             }
         }
 
