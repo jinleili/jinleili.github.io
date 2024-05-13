@@ -248,28 +248,35 @@ __exports.create_window_by_offscreen_canvas = function(ptr, canvas, scale_factor
 };
 
 /**
-* 完成插件初始化
+* 是否已完成插件初始化
 * 初始化未完成之前不能调用帧绘制
 * @param {bigint} ptr
 * @returns {number}
 */
-__exports.finish_init = function(ptr) {
-    const ret = wasm.finish_init(ptr);
+__exports.is_preparation_completed = function(ptr) {
+    const ret = wasm.is_preparation_completed(ptr);
     return ret >>> 0;
 };
 
 /**
+* 包装一个鼠标事件发送给 app
+* @param {bigint} ptr
+* @param {number} x
+* @param {number} y
+*/
+__exports.mouse_move = function(ptr, x, y) {
+    wasm.mouse_move(ptr, x, y);
+};
+
+/**
 * 帧绘制
-* 返回一个非 0 标记，表示当前帧的 cpu 端指令已执行完
 * render 运行在 worker 中时，主线程 post 绘制 msg 时可能 render 还没有完成当前帧的更新
 *
 * TODO：需要检测帧依赖的资源是否已加载完成，否则可能提交的 update 累积会导致栈溢出
 * @param {bigint} ptr
-* @returns {number}
 */
 __exports.enter_frame = function(ptr) {
-    const ret = wasm.enter_frame(ptr);
-    return ret;
+    wasm.enter_frame(ptr);
 };
 
 function handleError(f, args) {
@@ -1213,12 +1220,12 @@ function __wbg_get_imports() {
     imports.wbg.__wbg_executeBundles_0af360b832437e34 = function(arg0, arg1) {
         getObject(arg0).executeBundles(getObject(arg1));
     };
-    imports.wbg.__wbindgen_closure_wrapper37524 = function(arg0, arg1, arg2) {
-        const ret = makeMutClosure(arg0, arg1, 3489, __wbg_adapter_28);
+    imports.wbg.__wbindgen_closure_wrapper37621 = function(arg0, arg1, arg2) {
+        const ret = makeMutClosure(arg0, arg1, 3491, __wbg_adapter_28);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper38236 = function(arg0, arg1, arg2) {
-        const ret = makeMutClosure(arg0, arg1, 3493, __wbg_adapter_28);
+    imports.wbg.__wbindgen_closure_wrapper38333 = function(arg0, arg1, arg2) {
+        const ret = makeMutClosure(arg0, arg1, 3495, __wbg_adapter_28);
         return addHeapObject(ret);
     };
 
