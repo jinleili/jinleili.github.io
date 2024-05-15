@@ -36,7 +36,7 @@
     }
 
     #nav {
-      height: 184px;
+      height: 217px;
       width: 100%;
       background-color: #fafafa;
     }
@@ -137,6 +137,24 @@
 
         <button id="block">开始阻塞主线程</button>
         <button id="stop-block">停止阻塞</button>
+      </div>
+
+      <!-- 切换 Engine 实例与运行环境 -->
+      <div class="div33px">
+        <label>
+          <input type="radio" name="runTime" value="0" checked onchange="runTimeChanged(this)">
+          同时运行主线程及 Worker 实例&nbsp;&nbsp;
+        </label>
+
+        <label>
+          <input type="radio" name="runTime" value="1" onchange="runTimeChanged(this)">
+          仅运行主线程实例&nbsp;&nbsp;
+        </label>
+
+        <label>
+          <input type="radio" name="runTime" value="2" onchange="runTimeChanged(this)">
+          仅运行 Worker 线程实例
+        </label>
       </div>
     </div>
 
@@ -255,6 +273,26 @@
     window.blockMS = (ms) => {
       const start = performance.now();
       while (performance.now() - start < ms) { }
+    }
+
+    // 切换 engine 运行实例
+    function runTimeChanged(radioBt) {
+      switch (radioBt.value) {
+        case "0":
+          if (window.start_main_app) window.start_main_app();
+          if (window.start_worker_app) window.start_worker_app();
+          break;
+
+        case "1":
+          if (window.start_main_app) window.start_main_app();
+          if (window.stop_worker_app) window.stop_worker_app();
+          break;
+
+        case "2":
+          if (window.start_worker_app) window.start_worker_app();
+          if (window.stop_main_app) window.stop_main_app();
+          break;
+      }
     }
   </script>
 </body>
