@@ -274,6 +274,25 @@ __exports.mouse_move = function(ptr, x, y) {
 };
 
 /**
+* 鼠标左键按下
+* @param {bigint} ptr
+* @param {any} obj
+* @param {number} x
+* @param {number} y
+*/
+__exports.left_bt_down = function(ptr, obj, x, y) {
+    wasm.left_bt_down(ptr, addHeapObject(obj), x, y);
+};
+
+/**
+* 鼠标左键松开
+* @param {bigint} ptr
+*/
+__exports.left_bt_up = function(ptr) {
+    wasm.left_bt_up(ptr);
+};
+
+/**
 * 设置 hover（高亮） 效果
 * @param {bigint} ptr
 * @param {Array<any>} arr
@@ -283,19 +302,12 @@ __exports.set_hover = function(ptr, arr) {
 };
 
 /**
+* 设置 选中 效果
 * @param {bigint} ptr
 * @param {Array<any>} arr
 */
 __exports.set_selection = function(ptr, arr) {
     wasm.set_selection(ptr, addHeapObject(arr));
-};
-
-/**
-* @param {bigint} ptr
-* @param {number} block_time
-*/
-__exports.set_block_time = function(ptr, block_time) {
-    wasm.set_block_time(ptr, block_time);
 };
 
 /**
@@ -365,9 +377,6 @@ async function __wbg_load(module, imports) {
 function __wbg_get_imports() {
     const imports = {};
     imports.wbg = {};
-    imports.wbg.__wbg_log_d366ace1186be229 = function(arg0, arg1) {
-        console.log(getStringFromWasm0(arg0, arg1));
-    };
     imports.wbg.__wbg_new_16b304a2cfa7ff4a = function() {
         const ret = new Array();
         return addHeapObject(ret);
@@ -385,6 +394,9 @@ function __wbg_get_imports() {
     };
     imports.wbg.__wbg_sendpickfromrust_8da7244e46c74b62 = function(arg0) {
         send_pick_from_rust(takeObject(arg0));
+    };
+    imports.wbg.__wbg_log_d366ace1186be229 = function(arg0, arg1) {
+        console.log(getStringFromWasm0(arg0, arg1));
     };
     imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
         takeObject(arg0);
@@ -1278,11 +1290,11 @@ function __wbg_get_imports() {
     imports.wbg.__wbg_executeBundles_0af360b832437e34 = function(arg0, arg1) {
         getObject(arg0).executeBundles(getObject(arg1));
     };
-    imports.wbg.__wbindgen_closure_wrapper30687 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper30707 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 2794, __wbg_adapter_30);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper31399 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper31419 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 2798, __wbg_adapter_30);
         return addHeapObject(ret);
     };
