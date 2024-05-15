@@ -197,3 +197,7 @@ function block_from_rust() {
   window.blockMS(window.renderBlockTime);
 }
 window.block_from_rust = block_from_rust;
+
+window.blockWorkerRender = (dt) => {
+  worker.postMessage({ ty: "blockRender", blockTime: dt });
+};
