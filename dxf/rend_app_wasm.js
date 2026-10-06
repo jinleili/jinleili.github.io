@@ -211,6 +211,16 @@ export class RendHandle {
         wasm.rendhandle_boxPickFromCamera(this.__wbg_ptr, start_x, start_y, end_x, end_y, full_containment, viewport_index, obb_tolerance_physical_px, obb_tolerance_logical_px, debug);
     }
     /**
+     * @returns {any}
+     */
+    static buildCapabilities() {
+        const ret = wasm.rendhandle_buildCapabilities();
+        if (ret[2]) {
+            throw takeFromExternrefTable0(ret[1]);
+        }
+        return takeFromExternrefTable0(ret[0]);
+    }
+    /**
      * 清除全部 EXR 光照资源，同时取消在途加载和安装。
      */
     clearIbl() {
@@ -2881,7 +2891,7 @@ function __wbg_get_imports() {
             arg0.writeTexture(arg1, getArrayU8FromWasm0(arg2, arg3), arg4, arg5);
         }, arguments); },
         __wbindgen_cast_0000000000000001: function(arg0, arg1) {
-            // Cast intrinsic for `Closure(Closure { owned: true, function: Function { arguments: [Externref], shim_idx: 2406, ret: Unit, inner_ret: Some(Unit) }, mutable: true }) -> Externref`.
+            // Cast intrinsic for `Closure(Closure { owned: true, function: Function { arguments: [Externref], shim_idx: 2403, ret: Unit, inner_ret: Some(Unit) }, mutable: true }) -> Externref`.
             const ret = makeMutClosure(arg0, arg1, wasm_bindgen_b3950d515661b7ef___convert__closures_____invoke___wasm_bindgen_b3950d515661b7ef___JsValue______true_);
             return ret;
         },

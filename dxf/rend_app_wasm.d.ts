@@ -34,6 +34,7 @@ export class RendHandle {
      */
     static assertCanDropRendApp(): void;
     boxPickFromCamera(start_x: number, start_y: number, end_x: number, end_y: number, full_containment: boolean, viewport_index: number, obb_tolerance_physical_px: number, obb_tolerance_logical_px: number, debug: boolean): void;
+    static buildCapabilities(): any;
     /**
      * 清除全部 EXR 光照资源，同时取消在途加载和安装。
      */
@@ -254,6 +255,7 @@ export interface InitOutput {
     readonly rendhandle_applyGizmoTransformBatch: (a: number, b: bigint, c: number, d: number, e: any, f: any) => void;
     readonly rendhandle_assertCanDropRendApp: () => [number, number];
     readonly rendhandle_boxPickFromCamera: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number, j: number) => void;
+    readonly rendhandle_buildCapabilities: () => [number, number, number];
     readonly rendhandle_clearIbl: (a: number) => [number, number];
     readonly rendhandle_clearLocalDxf: (a: number, b: number) => [number, number];
     readonly rendhandle_clearRayPickRepeatDebugLines: (a: number) => void;
